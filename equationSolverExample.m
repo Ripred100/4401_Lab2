@@ -36,7 +36,12 @@ theta3(t) = joints(3)
 theta4(t) = joints(4)
 theta5(t) = joints(5)
 theta6(t) = joints(6)
+theta7(t) = piecewise((t > 0) & (t < 1), 0, (t >= 1), 1)
 
+for i = 0:0.1:3
+    i
+    Q_robot = [theta1(i), theta2(i), theta3(i), theta4(i), theta5(i), theta6(i), theta7(i)]
+end
 
 time = 0:dx:4;
 

@@ -28,7 +28,7 @@ NUMBER_OF_VIAPOINTS = 5
 % several points along a smooth path between every two via points in joint space.
 % That is, you sample the Cubic or Quintic polynomial 10 times between the via
 % points. This means that if you begin with 10 via points, you will end up with 91
-Q = ;
+
 
 joints = joint_eqn(keyframes, T_f)
 
@@ -40,12 +40,10 @@ theta3(t) = joints(3)
 theta4(t) = joints(4)
 theta5(t) = joints(5)
 theta6(t) = joints(6)
-theta7(t) = piecewise(                )%Figure this out. It's the gripper
+theta7(t) = piecewise( t > 0,   0)%Figure this out. It's the gripper. Look at modelDeg2RobotDeg
 
 
 
-
-[points, ~] = size(Q); % Obtain the number of points to send
 Robot = MSE4401BOT(1234,4321); % Create robot object
 pause on; % Enable the use of pause command
 % Prepare the robot to move, set to maximum torque and low speed
@@ -55,8 +53,8 @@ Robot.sendTorque([1700, 1700, 1700, 1700, 1700, 1700, 1700]);
 Robot.sendSpeed([2, 2, 2, 2, 2, 2, 2]); % Can be increased up to 5 for each joint
 % Sending the points to the robot
 %for i = 1:points
-for i = 0:0.1:NUMBER_OF_VIAPOINTS
-    Q_robot = Q(i,:); % Get the next point to be sent
+for i = 0:0.1:(NUMBER_OF_VIAPOINTS - 1)
+    Q_robot = Q(theta1(i), theta2(i), theta3(i), theta4(i), theta5(i), theta6(i), theta7(i)); % Get the next point to be sent
     % Convert from model angles to actual robot angles
     % You should have a function like ' convertRobotToModel' from Lab 1
     % You may have to modify that function to accommodate the 7th gripper angle
