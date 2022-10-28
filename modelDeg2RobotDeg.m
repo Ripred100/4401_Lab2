@@ -7,6 +7,7 @@ function robotDeg = modelDeg2RobotDeg(modDeg)
 %model angles [0, 0, 0, 0, 0, 0]. 
 Conversion = [150, 60, 240, 150, 150, 150];%In degrees
 
+
 robotDeg = modDeg + Conversion;
 
 end
