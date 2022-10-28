@@ -21,11 +21,30 @@ Q_via = [ ...
 150, 150, 150, 150, 150, 150, 150; ...
 150, 150, 150, 150, 150, 150, 150; ...
 150, 150, 150, 150, 150, 150, 150];
+
+NUMBER_OF_VIAPOINTS = 5
+
 % Replace the line below with the Cubic or Quintic polynomial required to generate
 % several points along a smooth path between every two via points in joint space.
 % That is, you sample the Cubic or Quintic polynomial 10 times between the via
 % points. This means that if you begin with 10 via points, you will end up with 91
-Q = Q_via;
+Q = ;
+
+joints = joint_eqn(keyframes, T_f)
+
+syms theta1(t) theta2(t) theta3(t) theta4(t) theta5(t) theta6(t) t
+
+theta1(t) = joints(1)
+theta2(t) = joints(2)
+theta3(t) = joints(3)
+theta4(t) = joints(4)
+theta5(t) = joints(5)
+theta6(t) = joints(6)
+theta7(t) = piecewise(                )%Figure this out. It's the gripper
+
+
+
+
 [points, ~] = size(Q); % Obtain the number of points to send
 Robot = MSE4401BOT(1234,4321); % Create robot object
 pause on; % Enable the use of pause command
@@ -35,12 +54,13 @@ pause;
 Robot.sendTorque([1700, 1700, 1700, 1700, 1700, 1700, 1700]);
 Robot.sendSpeed([2, 2, 2, 2, 2, 2, 2]); % Can be increased up to 5 for each joint
 % Sending the points to the robot
-for i = 1:points
+%for i = 1:points
+for i = 0:0.1:NUMBER_OF_VIAPOINTS
     Q_robot = Q(i,:); % Get the next point to be sent
     % Convert from model angles to actual robot angles
     % You should have a function like ' convertRobotToModel' from Lab 1
     % You may have to modify that function to accommodate the 7th gripper angle
-    Q_model = convertRobotToModel(Q_robot);
+    Q_model = modelDeg2RobotDeg(Q_robot);
     % Check for being close to singularity using the model, only first 6 angles
     J = ModelBot.jacob0(Q_model(1:6));
     DetJ = det(J);
