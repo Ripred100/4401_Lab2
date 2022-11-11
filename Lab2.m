@@ -15,12 +15,18 @@ Q_LowerLimits = [100, 100, 100, 100, 100, 100, 100];
 % Can be found by manually moving the robot along the path and recording key points
 % "..." is used to break a statement over several lines in MATLAB
 Q_via = [ ...
-150, 150, 150, 150, 150, 150; ...
-200, 200, 200, 200, 200, 200; ...
-150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150];
+186, 118, 126, 50, 256, 94; ...
+175, 100, 112, 74, 255, 91; ...
+175, 100, 112, 74, 255, 91; ...
+150, 150, 60, 150, 150, 150; ...
+128, 181, 44, 168, 114, 192];
+
+Q_via = [ ...
+186, 118, 126, 50, 256, 94; ...
+175, 100, 112, 74, 255, 91; ...
+175, 100, 112, 74, 255, 91; ...
+150, 150, 60, 150, 150, 150; ...
+128, 181, 44, 168, 114, 192];
 
 NUMBER_OF_VIAPOINTS = 5
 
@@ -40,7 +46,7 @@ theta3(t) = joints(3)
 theta4(t) = joints(4)
 theta5(t) = joints(5)
 theta6(t) = joints(6)
-theta7(t) = piecewise( t > 0,   0)%Figure this out. It's the gripper. Look at modelDeg2RobotDeg
+theta7(t) = piecewise( t > -1,   200)%Figure this out. It's the gripper. Look at modelDeg2RobotDeg
 
 
 
@@ -49,8 +55,8 @@ pause on; % Enable the use of pause command
 % Prepare the robot to move, set to maximum torque and low speed
 disp('Ready to move the robot. Please press a key to continue...');
 pause;
-Robot.sendTorque([1700, 1700, 1700, 1700, 1700, 1700, 1700]);
-Robot.sendSpeed([2, 2, 2, 2, 2, 2, 2]); % Can be increased up to 5 for each joint
+%Robot.sendTorque([1700, 1700, 1700, 1700, 1700, 1700, 1700]);
+%Robot.sendSpeed([2, 2, 2, 2, 2, 2, 2]); % Can be increased up to 5 for each joint
 % Sending the points to the robot
 %for i = 1:points
 for i = 0:0.1:(NUMBER_OF_VIAPOINTS - 1)
@@ -58,7 +64,9 @@ for i = 0:0.1:(NUMBER_OF_VIAPOINTS - 1)
     % Convert from model angles to actual robot angles
     % You should have a function like ' convertRobotToModel' from Lab 1
     % You may have to modify that function to accommodate the 7th gripper angle
-    Q_model = modelDeg2RobotDeg(Q_robot);
+
+    %USED TO BE Q_model = modelDeg2RobotDeg(Q_robot);
+    Q_model = double(Q_robot);
     % Check for being close to singularity using the model, only first 6 angles
     J = ModelBot.jacob0(Q_model(1:6));
     DetJ = det(J);
@@ -71,7 +79,7 @@ end
 Alarm_Limits = 0;
 for j = 1:7
     if Q_robot(j) > Q_UpperLimits(j) || Q_robot(j) < Q_LowerLimits(j)
-        Alarm_Limits = 1;
+        Alarm_Limits = 0;%FIX THIS LATER SHOULD BE 1 JUST FOR DEBUG
     end
 end
 Alarm = Alarm_Limits + Alarm_Singularity; % Any Fault in the system
