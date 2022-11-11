@@ -14,21 +14,29 @@ Q_LowerLimits = [100, 100, 100, 100, 100, 100, 100];
 % Sample list of via points (7 angles in degrees per point) to be sent to the robot
 % Can be found by manually moving the robot along the path and recording key points
 % "..." is used to break a statement over several lines in MATLAB
-Q_via = [ ...
-186, 118, 126, 50, 256, 94; ...
-175, 100, 112, 74, 255, 91; ...
-175, 100, 112, 74, 255, 91; ...
-150, 150, 60, 150, 150, 150; ...
-128, 181, 44, 168, 114, 192];
+% Q_via = [ ...
+% 186, 118, 126, 50, 256, 94; ...
+% 175, 100, 112, 74, 255, 91; ...
+% 175, 100, 112, 74, 255, 91; ...
+% 150, 150, 60, 150, 150, 150; ...
+% 128, 181, 44, 168, 114, 192];
+% 
+% Q_via = [
+% 145 136 80 67 220 150;
+% 160 136 65 92 220 138;
+% 148 137 110 160 71 137;
+% 109 144 110 160 100 137;
+% 70 144 90 170 91 138];
 
-Q_via = [ ...
-186, 118, 126, 50, 256, 94; ...
-175, 100, 112, 74, 255, 91; ...
-175, 100, 112, 74, 255, 91; ...
-150, 150, 60, 150, 150, 150; ...
-128, 181, 44, 168, 114, 192];
+Q_via = [
+145 136 80 67 220 150;
+160 136 65 92 220 138;
+160 150 60 170 230 150;
+165 150 70 150 57 157;
+109 150 110 160 100 137;
+70 144 90 170 91 138];
 
-NUMBER_OF_VIAPOINTS = 5
+NUMBER_OF_VIAPOINTS = 6
 
 % Replace the line below with the Cubic or Quintic polynomial required to generate
 % several points along a smooth path between every two via points in joint space.
@@ -46,11 +54,11 @@ theta3(t) = joints(3)
 theta4(t) = joints(4)
 theta5(t) = joints(5)
 theta6(t) = joints(6)
-theta7(t) = piecewise( t > -1,   200)%Figure this out. It's the gripper. Look at modelDeg2RobotDeg
+theta7(t) = piecewise( t <= 0.9, 160, (t > 0.9 & t < 4.8), 210, 0)%Figure this out. It's the gripper. Look at modelDeg2RobotDeg
 
 
 
-Robot = MSE4401BOT(1234,4321); % Create robot object
+Robot = MSE4401BOT(1234,4321); % Create robot objects
 pause on; % Enable the use of pause command
 % Prepare the robot to move, set to maximum torque and low speed
 disp('Ready to move the robot. Please press a key to continue...');
