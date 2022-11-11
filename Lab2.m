@@ -9,18 +9,18 @@ Link5 = Link('a',0,'d',0,'alpha',pi/2);
 Link6 = Link('a',0,'d',250,'alpha',0);
 ModelBot = SerialLink([Link1, Link2, Link3, Link4, Link5, Link6],'name','MSE');
 % Joint Limits should be defined (in terms of actual robot angles in degrees)
-Q_UpperLimits = [q1u, q2u, q3u, q4u, q5u, q6u, q7u];
-Q_LowerLimits = [q1l, q2l, q3l, q4l, q5l, q6l, q7l];
+Q_UpperLimits = [230, 230, 230, 230, 230, 230, 230];
+Q_LowerLimits = [100, 100, 100, 100, 100, 100, 100];
 % Sample list of via points (7 angles in degrees per point) to be sent to the robot
 % Can be found by manually moving the robot along the path and recording key points
 % "..." is used to break a statement over several lines in MATLAB
 Q_via = [ ...
-150, 150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150, 150; ...
-150, 150, 150, 150, 150, 150, 150];
+150, 150, 150, 150, 150, 150; ...
+200, 200, 200, 200, 200, 200; ...
+150, 150, 150, 150, 150, 150; ...
+150, 150, 150, 150, 150, 150; ...
+150, 150, 150, 150, 150, 150; ...
+150, 150, 150, 150, 150, 150];
 
 NUMBER_OF_VIAPOINTS = 5
 
@@ -29,8 +29,8 @@ NUMBER_OF_VIAPOINTS = 5
 % That is, you sample the Cubic or Quintic polynomial 10 times between the via
 % points. This means that if you begin with 10 via points, you will end up with 91
 
-
-joints = joint_eqn(keyframes, T_f)
+T_f = 1; %The "time" between viapoints so that theta1(n*T_f) are all the viapoint positions
+joints = joint_eqn(Q_via, T_f)
 
 syms theta1(t) theta2(t) theta3(t) theta4(t) theta5(t) theta6(t) t
 
@@ -54,7 +54,7 @@ Robot.sendSpeed([2, 2, 2, 2, 2, 2, 2]); % Can be increased up to 5 for each join
 % Sending the points to the robot
 %for i = 1:points
 for i = 0:0.1:(NUMBER_OF_VIAPOINTS - 1)
-    Q_robot = Q(theta1(i), theta2(i), theta3(i), theta4(i), theta5(i), theta6(i), theta7(i)); % Get the next point to be sent
+    Q_robot = [theta1(i), theta2(i), theta3(i), theta4(i), theta5(i), theta6(i), theta7(i)] % Get the next point to be sent
     % Convert from model angles to actual robot angles
     % You should have a function like ' convertRobotToModel' from Lab 1
     % You may have to modify that function to accommodate the 7th gripper angle
