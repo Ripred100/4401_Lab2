@@ -13,6 +13,7 @@ Q_via = [
 T_f = 1; %The "time" between viapoints so that theta1(n*T_f) are all the viapoint positions
 joints = joint_eqn(Q_via, T_f);
 
+
 %syms theta1(t) theta2(t) theta3(t) theta4(t) theta5(t) theta6(t) t
 syms t
 % 
