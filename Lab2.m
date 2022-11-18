@@ -9,8 +9,8 @@ Link5 = Link('a',0,'d',0,'alpha',pi/2);
 Link6 = Link('a',0,'d',250,'alpha',0);
 ModelBot = SerialLink([Link1, Link2, Link3, Link4, Link5, Link6],'name','MSE');
 % Joint Limits should be defined (in terms of actual robot angles in degrees)
-Q_UpperLimits = [230, 230, 230, 230, 230, 230, 230];
-Q_LowerLimits = [100, 100, 100, 100, 100, 100, 100];
+Q_UpperLimits = [230, 150, 150, 230, 230, 230, 230];
+Q_LowerLimits = [0, 60, 55, 100, 100, 100, 100];
 % Sample list of via points (7 angles in degrees per point) to be sent to the robot
 % Can be found by manually moving the robot along the path and recording key points
 % "..." is used to break a statement over several lines in MATLAB

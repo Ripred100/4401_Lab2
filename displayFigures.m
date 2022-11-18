@@ -41,6 +41,9 @@ for i = 1:6
     str = sprintf("Theta%d", i);
     subplot(3,1,1)
     plot(x, theta(x),LineWidth=1, Color=[0 0.4470 0.7410])
+        if mod(i,2)
+            set(gca,'Color','k')
+        end
     title(strcat(str, "(t)"))
     ylabel("Robot degrees")
     grid on
