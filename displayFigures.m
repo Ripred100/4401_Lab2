@@ -1,4 +1,4 @@
-
+%Viapoints taken from lab2.m
 Q_via = [
 145 136 80 67 220 150;
 160 136 65 92 220 138;
@@ -12,7 +12,6 @@ Q_via = [
 
 T_f = 1; %The "time" between viapoints so that theta1(n*T_f) are all the viapoint positions
 joints = joint_eqn(Q_via, T_f);
-
 
 %syms theta1(t) theta2(t) theta3(t) theta4(t) theta5(t) theta6(t) t
 syms t
@@ -42,9 +41,6 @@ for i = 1:6
     str = sprintf("Theta%d", i);
     subplot(3,1,1)
     plot(x, theta(x),LineWidth=1, Color=[0 0.4470 0.7410])
-        if mod(i,2)
-            set(gca,'Color','k')
-        end
     title(strcat(str, "(t)"))
     ylabel("Robot degrees")
     grid on
