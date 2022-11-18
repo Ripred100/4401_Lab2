@@ -9,7 +9,8 @@ Link5 = Link('a',0,'d',0,'alpha',pi/2);
 Link6 = Link('a',0,'d',250,'alpha',0);
 ModelBot = SerialLink([Link1, Link2, Link3, Link4, Link5, Link6],'name','MSE');
 % Joint Limits should be defined (in terms of actual robot angles in degrees)
-Q_UpperLimits = [230, 150, 150, 230, 230, 230, 230];
+
+Q_UpperLimits = [230, 150, 150, 230, 230, 235, 190];
 Q_LowerLimits = [0, 60, 55, 100, 100, 100, 100];
 % Sample list of via points (7 angles in degrees per point) to be sent to the robot
 % Can be found by manually moving the robot along the path and recording key points
@@ -25,6 +26,7 @@ Q_via = [
 3 140 80 125 210 145];
 
 NUMBER_OF_VIAPOINTS = 7
+
 
 % Replace the line below with the Cubic or Quintic polynomial required to generate
 % several points along a smooth path between every two via points in joint space.
@@ -42,7 +44,9 @@ theta3(t) = joints(3)
 theta4(t) = joints(4)
 theta5(t) = joints(5)
 theta6(t) = joints(6)
+
 theta7(t) = piecewise( t <= 0.9, 160, (t > 0.9 & t < 5.8), 210, 0)%Figure this out. It's the gripper. Look at modelDeg2RobotDeg
+
 
 
 
@@ -52,12 +56,14 @@ pause on; % Enable the use of pause command
 disp('Ready to move the robot. Please press a key to continue...');
 pause;
 
+
 for i = 0:0.05:(NUMBER_OF_VIAPOINTS - 1)
     i
     if i == 4  
         pause(3)
     end
     Q_robot = [theta1(i), theta2(i), theta3(i), theta4(i), theta5(i), theta6(i), theta7(i)] % Get the next point to be sent
+
 
     Q_model = double(Q_robot);
     % Check for being close to singularity using the model, only first 6 angles
