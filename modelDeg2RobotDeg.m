@@ -19,4 +19,3 @@ if robotDeg(7) == 0
 else
     robotDeg(7) = CLOSED_CLAW_VALUE
 end
-

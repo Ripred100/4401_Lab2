@@ -26,4 +26,3 @@ eqn(6) = thetaDoubleDot(a(3),a(4),a(5),a(6),  T_f)    == 0;
 [a1, a2, a3, a4, a5, a6] = solve(eqn, a);
 a_sol = [a1, a2, a3, a4, a5, a6];
 end
-
